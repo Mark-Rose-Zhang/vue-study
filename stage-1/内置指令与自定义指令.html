@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>内置指令与自定义指令</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id='root'>
+        <span v-big="n"></span><br />
+        <button @click='n++'>点我n++</button><br />
+        <input type="text" v-fbind:value="n"><br />
+    </div>
+
+</body>
+
+<script>
+    /**
+     * v-bind :单向绑定解析表达式，可简写为 :xxx
+     * v-model :双向数据绑定
+     * v-for :遍历数组/对象/字符串
+     * v-on :绑定事件监听，可简写为 @
+     * v-if :条件渲染（动态控制节点是否存在）
+     * v-else :条件渲染（动态控制节点是否存在）
+     * v-show:条件渲染（动态控制节点是否展示）
+     * v-text: 里面的内容作为页面元素的内容
+     * v-html: innerHTML
+     * v-cloak: 配合 css [.v-cloak]{display: none} 实现vue对象未加载时的显示问题
+     * v-once: 模板只渲染一次
+     * v-pre: 跳过vue的预加载阶段
+     * 
+     * 
+     * https://v2.cn.vuejs.org/v2/guide/custom-directive.html
+     * 
+     * 
+     */
+
+    //全局注册
+    // Vue.directive('fbind', {
+    //     // 与DOM元素进行绑定时
+    //     bind(element, binding) {
+    //         element.value = binding.value;
+    //     },
+    //     // 元素被插入界面后调用
+    //     inserted(element, binding) {
+    //         element.focus();
+    //     },
+    //     // 模板重新渲染时
+    //     update(element, binding) {
+    //         element.value = binding.value;
+    //     },
+    // })
+    new Vue({
+        el: '#root',
+        data: {
+            n: 0
+        },
+        directives: {
+            // 与DOM元素绑定时以及模版被重新渲染时调用 ---> 简写模式
+            big(element, binding) {
+                element.innerHTML = binding.value * 10;
+            },
+            fbind: {
+                // 与DOM元素进行绑定时
+                bind(element, binding) {
+                    element.value = binding.value;
+                },
+                // 元素被插入界面后调用
+                inserted(element, binding) {
+                    element.focus();
+                },
+                // 模板重新渲染时
+                update(element, binding) {
+                    element.value = binding.value;
+                },
+            }
+
+        }
+    })
+</script>
+
+</html>

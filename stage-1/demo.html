@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+
+    <script src="../vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app', // 绑定的dom对象
+            data: { // 对应的数据信息 该内部的数据通过数据代理将属性绑定在了vm身上 data->vm._data
+                message: 'Hello Vue!'
+            }
+        })
+
+        console.log(vm);
+    </script>
+</body>
+
+</html>

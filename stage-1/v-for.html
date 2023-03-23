@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click='filterPerson'>点我过滤性别</button>
+        <button @click='sortPersonByAge'>点我按年龄排序</button>
+        <ul>
+            <li v-for='(p,index) of persons' :key='p.id'>
+                <span>{{p.name}}-{{p.id}}</span>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        /**
+         * 1. 遍历元素为数组 v-for='item in array' v-for = '(item,index) in array'
+         * 2. 遍历元素为对象 v-for='(value,key) in obj'  v-for='(value,name,index) in obj'
+         * 3. v-for 与 v-if 一起使用时, v-for 优先级更高
+         * 4. 可以利用 of 代替 in
+         * 
+         * 5. key 属性 原理  ---> (虚拟 DOM) 对比算法 拿着原始的虚拟 DOM 和修改后的虚拟 DOM 按照 key 值进行对比
+         * Duplicate keys detected: 'xxxx'. This may cause an update error.
+         * 
+         * 
+         * https://v2.cn.vuejs.org/v2/api/#v-for
+         * https://v2.cn.vuejs.org/v2/api/#key
+         * 
+         */
+        Vue.config.productionTip = true
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                persons: [{
+                        id: '001',
+                        name: 'zhangsan',
+                        age: 18,
+                        sex: 'male'
+                    }, {
+                        id: '002',
+                        name: 'lisi',
+                        age: 22,
+                        sex: 'female'
+                    }, {
+                        id: '003',
+                        name: 'wangwu',
+                        age: 23,
+                        sex: 'male'
+                    },
+                    {
+                        id: '004',
+                        name: 'liuliu',
+                        age: 33,
+                        sex: 'male'
+                    },
+                ]
+            },
+            methods: {
+                filterPerson() {
+                    this.persons = this.persons.filter(item => {
+                        return item.sex !== 'female'
+                    })
+                },
+                sortPersonByAge() {
+                    this.persons.sort(function (a, b) {
+                        return b.age - a.age
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

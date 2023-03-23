@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据绑定</title>
+    <!-- <script src="../vue.js"></script> -->
+</head>
+
+<body>
+    <div id="app"></div>
+    <script type="text/javascript">
+        // 数据代理 -> 通过一个对象的属性去代理另一个对象的属性
+        // vue 数据代理原理 : 、
+        //      1. 通过object.defineProperty()把data对象中所有属性添加到vm上
+        //      2. 为每一个添加到vm上的属性，都指定一个getter/setter。
+        //      3. 在getter/setter内部去操作(读/写)data中对应的属性。
+        // 总结： 通过 vue 对象去代理 data 里面的属性操作(getter/setter) ---> 有一个问题,我们修改了data里面的数据,那是怎么动态刷新view里面的数据的
+        let message = 'Hello World'; // 相当于界面使用
+        let obj1 = {
+            x: 100
+        }
+        let obj2 = {
+            y: 200
+        }
+
+        // 数据绑定,可以读取和修改 obj1.message
+        Object.defineProperty(obj2, 'message', {
+            configurable: true,
+            enumerable: true,
+            get() {
+                return obj1.message
+            },
+            set(value) {
+                obj1.message = value
+            }
+        })
+
+        Object.defineProperty(obj1, 'message', {
+            configurable: true,
+            enumerable: true,
+            get() {
+                return message
+            },
+            set(value) {
+                // do otherThing
+                message = value
+            }
+        })
+    </script>
+</body>
+
+</html>

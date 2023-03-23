@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click='updateInfo'>点我更新用户信息</button>
+        <ul>
+            <li v-for='(p,index) of persons' :key='p.id'>
+                <span>{{p.name}}-{{p.id}}</span>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        /**
+         * 
+         *   数据更新原理 ---> 见数据代理
+         * 
+         */
+        Vue.config.productionTip = true
+        let data = {
+            persons: [{
+                    id: '001',
+                    name: 'zhangsan',
+                    age: 18,
+                    sex: 'male'
+                }, {
+                    id: '002',
+                    name: 'lisi',
+                    age: 22,
+                    sex: 'female'
+                }, {
+                    id: '003',
+                    name: 'wangwu',
+                    age: 23,
+                    sex: 'male'
+                },
+                {
+                    id: '004',
+                    name: 'liuliu',
+                    age: 33,
+                    sex: 'male'
+                },
+            ]
+        }
+        const vm = new Vue({
+            el: '#app',
+            data,
+            methods: {
+                updateInfo() {
+                    // vue2 对于这种直接该数组元素的方式是不会进行监听的(添加getter和setter方法)
+                    this.persons[0] = {
+                        id: '001',
+                        name: 'mabaoguo',
+                        age: 50,
+                        sex: 'male'
+                    }
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>

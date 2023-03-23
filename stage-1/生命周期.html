@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 生命周期</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+
+    <div id='root'>
+        <h2>当前的n值 {{n}}</h2>
+        <button @click='n++'>点我n++</button>
+    </div>
+    <script>
+        /**
+         * 1. init events and lifecycle
+         * --- beforeCreate
+         * 2. init injection and reactivity
+         * --- created
+         * 3. Has 'el' option
+         *      3.1 no  call vm.$mount(el)
+         *      3.2 yes Has 'template' option
+         *          3.2.1 no  Compile el's outerHTML as `template` ----> 包扩 root
+         *          3.2.2 yes Compile template into reader function  ----> 替换 root
+         * --- beforeMount
+         * 4. Create vm $el and replace `el` with it ---> 保存虚拟DOM到 $el 并且插入到真实 DOM
+         * --- mounted
+         * 5. Mounted
+         *      ---beforeUpdate
+         *      5.1 virtual DOm re-render and patch ----> 虚拟 DOM 对比
+         *      --- update
+         * --- beforeDestroy
+         * 6. Teardown watchers child component and event listeners
+         * --- destroyed
+         */
+
+
+
+
+        new Vue({
+            el: '#root',
+            data: {
+                n: 0
+            },
+            methods: {
+
+            },
+            // 在数据监视和数据绑定完成之前
+            beforeCreate() {
+                console.log('beforeCreate', this);
+            },
+            // 此时可以获取 data 中的数据以及 methods 中的方法
+            created() {
+                console.log('created', this);
+            },
+            // 在将虚拟 DOM 挂载到真实页面之前 此时操作 DOM 最终都不会奏效
+            beforeMount() {
+                console.log('beforeMount', this);
+            },
+            // 页面已经被Vue渲染完毕(可以注册定时器，发送异步请求，订阅消息奥，绑定自定义事件)
+            mounted() {
+                console.log('mounted', this);
+            },
+            // 数据是最新的,但是页面并不是
+            beforeUpdate() {
+
+            },
+            // 数据和页面都已经是最新的
+            updated() {
+
+            },
+            // 在 Vue 销毁之前的操作 (关闭定时器，取消订阅消息,解除自定义事件等) 此时修改数据无效了
+            beforeDestroy() {
+
+            },
+
+            destroyed() {
+
+            },
+        })
+    </script>
+
+</body>
+
+</html>

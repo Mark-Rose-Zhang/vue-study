@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for</title>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+
+    <script>
+        /**
+         * 
+         *   数据更新原理 ---> 见数据代理
+         * 
+         */
+        let data = {
+            name: 'xxx',
+            age: 20
+        }
+
+
+        function observer(obj) {
+            const keys = Object.keys(obj);
+            keys.forEach(key => {
+                Object.defineProperty(this, key, {
+                    get() {
+                        return obj[key];
+                    },
+                    set(val) {
+                        console.log("重新解析模板了,生成虚拟DOM，doxxxxxx");
+                        obj[key] = val;
+                    }
+                })
+            })
+        }
+
+        const obs = new observer(data);
+        let vm = {};
+        vm._data = data = obs;
+    </script>
+</body>
+
+</html>

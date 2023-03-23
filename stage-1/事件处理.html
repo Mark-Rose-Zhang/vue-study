@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理</title>
+
+    <script src="../vue.js"></script>
+
+
+</head>
+
+<body>
+    <div id="app">
+        <h4>name: {{name}}</h4>
+        <button @click='showInfo1'>点我调用不传出参数</button>
+        <button @click='showInfo2($event,111)'>点我调用不传出参数</button><br />
+        <button><a @click.prevent.once='showInfo($event,"阻止默认事件")'>阻止默认事件</a></button><br />
+        <button @click='showInfo($event,"父亲")'><a @click.stop='showInfo($event,"儿子-阻止事件冒泡")'>阻止事件冒泡</a></button><br />
+        <button @click.once='showInfo($event,"只调用一次")'>调用一次</button><br />
+        <button @click.self='showInfo($event,"点击了自己")'>点击自己</button><br />
+        <input type="text" placeholder="输入回车获取提示" @keyup.enter='keyInfo'><br>
+        <input type="text" placeholder="输入回车(别名）获取提示" @keyup.huiche='keyInfo'><br>
+
+
+    </div>
+
+    <script>
+        /**
+         * 事件基本用法:
+         *  1. v-on / @ (注意事件处理要声明在 methods中) 表示事件函数声明
+         *  2. methods 中声明事件处理函数,其 this 指向 vm
+         *  3. @click = 'xxx' 与 @click = 'xxx($event)' 指向相同的函数, 但是后者可以传递参数
+         * 
+         * 
+         * 事件修饰符: 
+         *  1. prevent : 阻止默认事件
+         *  2. stop: 阻止冒泡事件
+         *  3. once: 事件只执行一次
+         *  4. capture: 使用事件的捕获模式
+         *  5. self: 只有触发事件的元素是自身时才调用事件函数
+         *  6. passive: 默认行为直接执行，不用等待回掉函数的结果
+         * 
+         *  注意修饰符可以连用
+         * 
+         * 
+         *  键盘事件：
+         *   1. 常用按键别名: .enter .tab(必须配合keyDown) .delete (捕获“删除”和“退格”键) .esc .space .up .down .left .right   从event 可以获取 key,keyCode
+         *   2. Vue.config.keyCodes.f1 = 112 (这个value是已经提供的keyCode值) 定制按键别名
+         *   3. 系统修饰按键: .ctrl .alt .shift .meta
+         *      3.1 配合 keyUp 可以修饰其他按键 keyDown.ctrl.y
+         *      3.2 keyDown 就是正常按键
+         *      3.3 .exact 控制由精确的系统修饰符组合触发的事件
+         */
+        Vue.config.keyCodes = {
+            'huiche': 13 // 实际对应的是回车键
+        }
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                'name': 'nancheng'
+            },
+            methods: {
+                showInfo1(event) {
+                    console.log(event);
+                },
+                showInfo2(event, number) {
+                    console.log(event, 'number: ', number);
+                },
+                showInfo(event, msg) {
+                    console.log(event.target, msg);
+                },
+                keyInfo(e) {
+                    console.log(e.key, e.keyCode);
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

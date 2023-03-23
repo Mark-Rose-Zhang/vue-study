@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        姓: <input type="text" v-model='firstName'><br />
+        名: <input type="text" v-model='lastName'><br />
+        全名: <span>{{fullName}}</span>
+        全名: <span>{{fullName}}</span>
+        全名: <span>{{fullName}}</span>
+    </div>
+
+    <script>
+        /**
+         * 1. 定义 通过vue已有的属性计算出来的属性
+         * 2. 原理 底层借助了Object.defineProperty
+         * 3. get 函数执行时机
+         *      3.1 属性首次被计算时
+         *      3.2 计算属性所依赖的属性发生改变时
+         * 4. 相比于方法可以对数据进行缓存
+         * 5. 计算属性不会被手动改变时可以简写
+         * 
+         * https://v2.cn.vuejs.org/v2/api/#computed
+         * 
+         */
+        Vue.config.productionTip = true
+        Vue.config.devtools = true
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                firstName: '张',
+                lastName: '三'
+            },
+            computed: {
+                // fullName: {
+                //     get() {
+                //         console.log('call get()');
+                //         return this.firstName + '-' + this.lastName;
+                //     },
+                //     set(curVal) {
+                //         console.log(curVal);
+                //         const arr = curVal.split('-');
+                //         this.firstName = arr[0];
+                //         this.lastName = arr[1];
+                //     }
+                // }
+                fullName() {
+                    return this.firstName + '-' + this.lastName;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

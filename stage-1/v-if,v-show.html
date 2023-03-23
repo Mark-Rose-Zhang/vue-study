@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>条件渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>当前n的值为: {{n}}</h2>
+        <button @click='n++'>点我n++</button><br />
+        <h2 v-if='n === 2'>当前n的值为2</h2>
+        <h2 v-else-if='n === 3'>当前n的值为3</h2>
+        <h2 v-else>当前n的值为{{n}}</h2>
+
+        <h2 v-show='n === 2'>当前n的值为2</h2>
+        <h2 v-show='n === 3'>当前n的值为3</h2>
+
+
+        <h2 v-if='n === 2'>当前n的值为2</h2>
+        <h2 v-else-if='n === 3'>当前n的值为3</h2>
+        <a>xxxx</a>
+        <h2 v-else>当前n的值为2</h2>
+    </div>
+
+    <script>
+        /**
+         * 1. v-if v-else-if v-else : 元素之间不可被打断，该语句会删除实际的 DOM 元素 <template> 标签只能配合 v-if
+         * 2. v-show 只是设置元素的display:false 效率更高(不涉及DOM元素的删除)
+         * 
+         * 
+         * https://v2.cn.vuejs.org/v2/api/#v-if
+         * 
+         */
+        Vue.config.productionTip = true
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                n: 0
+            }
+        })
+    </script>
+</body>
+
+</html>

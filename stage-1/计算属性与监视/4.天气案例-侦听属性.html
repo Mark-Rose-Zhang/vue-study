@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>今天天气很{{isHot? '炎热':'凉爽'}}</h2>
+        <button @click='changeHot'>点我切换天气</button>
+    </div>
+
+    <script>
+        /**
+         * 1. 定义 当侦听的属性发生变化时，会调用对应的handler处理器处理方法
+         * 2. Vue里面的watch默认不会监听多级属性，可以设置 deep 选项实现多级监听
+         * 3. 可以利用 vm.$watch(property,function) 实现对属性的监视
+         * https://v2.cn.vuejs.org/v2/api/#watch
+         * 
+         * 
+         * 计算属性对比侦听属性:
+         *      侦听属性完全可以替换计算属性，但是计算属性不能替代侦听属性 (异步操作)
+         * 
+         * 
+         * 原则：Vue所管理的函数要写成普通函数，这样this会指向对应的Vue实，其它的函数最好写成箭头函数，这样this会指向Vue实例
+         */
+        Vue.config.productionTip = true
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                isHot: true
+            },
+            watch: {
+                isHot: {
+                    // immediate: true, // 开启立即监听模式，会监听初始化
+                    // deep: true, // 开启深度监视
+                    handler(cur, old) {
+                        console.log(cur, old);
+                    }
+                }
+            },
+            methods: {
+                changeHot() {
+                    this.isHot = !this.isHot;
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

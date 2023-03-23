@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 事件监听</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click='updateInfo'>点我更新用户信息</button>
+        <ul>
+            <li v-for='(p,index) of persons' :key='p.id'>
+                <span>{{p.name}}-{{p.id}}</span>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        /**
+         * 
+         *   数据更新原理 ---> 见数据代理
+         * 
+         * 1. 对于对象来说,我们可以利用 Vue.set(target,key,value) / vm.$set(target,key,value) 的形式动态添加属性（实现数据监听）
+         * 2. 对于数组来说,Vue 为 push pop shift unshift splice sort reverse 这些原地修改数组的操作进行了包装,调用这些方法之后会进行页面渲染
+         * 3. 注意 vm.$set() 不能给vm本身以及根数据对象添加属性  
+         * 
+         */
+        Vue.config.productionTip = true
+        let data = {
+            persons: [{
+                    id: '001',
+                    name: 'zhangsan',
+                    age: 18,
+                    sex: 'male'
+                }, {
+                    id: '002',
+                    name: 'lisi',
+                    age: 22,
+                    sex: 'female'
+                }, {
+                    id: '003',
+                    name: 'wangwu',
+                    age: 23,
+                    sex: 'male'
+                },
+                {
+                    id: '004',
+                    name: 'liuliu',
+                    age: 33,
+                    sex: 'male'
+                },
+            ]
+        }
+        const vm = new Vue({
+            el: '#app',
+            data,
+            methods: {
+                updateInfo() {
+                    // vue2 对于这种直接该数组元素的方式是不会进行监听的(添加getter和setter方法)
+                    // this.persons[0] = {
+                    //     id: '001',
+                    //     name: 'mabaoguo',
+                    //     age: 50,
+                    //     sex: 'male'
+                    // }
+                    this.persons.splice(0, 1, {
+                        id: '001',
+                        name: 'mabaoguo',
+                        age: 50,
+                        sex: 'male'
+                    })
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>
