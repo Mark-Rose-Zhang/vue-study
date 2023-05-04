@@ -1,45 +1,89 @@
 <template>
   <div>
-    <el-steps :active="step" align-center style="margin-top: 20px">
-      <el-step title="步骤1" description="损坏信息填写"></el-step>
-      <el-step title="步骤2" description="损坏信息一级审批"></el-step>
-      <el-step title="步骤3" description="损坏信息二级审批"></el-step>
-      <el-step title="步骤4" description="审批结果"></el-step>
-    </el-steps>
-    <el-divider></el-divider>
-
-    <el-switch
-      v-model="v1"
-      v-show="step === 1"
-      active-text="按月付费"
-      inactive-text="按年付费"
-    >
-    </el-switch>
-    <el-time-select
-      v-model="t1"
-      v-show="step === 2"
-      :picker-options="{
-        start: '08:30',
-        step: '00:15',
-        end: '18:30',
-      }"
-      placeholder="选择时间"
-    >
-    </el-time-select>
-
-    <el-row>
-      <el-button
-        type="warning"
-        icon="el-icon-star-off"
-        circle
-        @click="forward"
-      ></el-button>
-      <el-button
-        type="danger"
-        icon="el-icon-delete"
-        circle
-        @click="back"
-      ></el-button>
+    <el-row :gutter="20">
+      <el-col :span="6"
+        ><div class="grid-content">
+          <el-card :body-style="{ padding: '0px' }">
+            <div style="text-align: center">
+              <img
+                src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                class="image"
+              />
+            </div>
+            <div style="padding: 14px">
+              <span>好吃的汉堡</span>
+              <div class="bottom clearfix">
+                <time class="time">{{ currentDate }}</time>
+                <el-button type="text" class="button">操作按钮</el-button>
+              </div>
+            </div>
+          </el-card>
+        </div></el-col
+      >
+      <el-col :span="6"
+        ><div class="grid-content bg-purple">
+          <el-card :body-style="{ padding: '0px' }">
+            <div style="text-align: center">
+              <img
+                src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                class="image"
+              />
+            </div>
+            <div style="padding: 14px">
+              <span>好吃的汉堡</span>
+              <div class="bottom clearfix">
+                <time class="time">{{ currentDate }}</time>
+                <el-button type="text" class="button">操作按钮</el-button>
+              </div>
+            </div>
+          </el-card>
+        </div></el-col
+      >
+      <el-col :span="6"
+        ><div class="grid-content bg-purple">
+          <el-card :body-style="{ padding: '0px' }">
+            <div style="text-align: center">
+              <img
+                src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                class="image"
+              />
+            </div>
+            <div
+              style="
+                 {
+                  padding: 14px;
+                  text-align: center;
+                }
+              "
+            >
+              <span>好吃的汉堡</span>
+              <div class="bottom clearfix">
+                <time class="time">{{ currentDate }}</time>
+                <el-button type="text" class="button">操作按钮</el-button>
+              </div>
+            </div>
+          </el-card>
+        </div></el-col
+      >
+      <el-col :span="6"
+        ><div>
+          <el-card :body-style="{ padding: '0px' }">
+            <div style="text-align: center">
+              <img
+                src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                class="image"
+              />
+            </div>
+            <div style="padding: 14px">
+              <span>好吃的汉堡</span>
+              <div class="bottom clearfix">
+                <time class="time">{{ currentDate }}</time>
+                <el-button type="text" class="button">操作按钮</el-button>
+              </div>
+            </div>
+          </el-card>
+        </div></el-col
+      >
     </el-row>
   </div>
 </template>
@@ -47,23 +91,36 @@
 <script>
 export default {
   name: "App",
-  data() {
-    return {
-      step: 1,
-      v1: true,
-      t1: "",
-    };
-  },
-  methods: {
-    forward() {
-      this.step = (this.step + 1) % 4;
-    },
-
-    back() {
-      this.step = (this.step - 1) % 4;
-    },
-  },
 };
 </script>
 <style scoped>
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.el-col {
+  border-radius: 4px;
+}
+.text {
+  font-size: 14px;
+}
+
+.item {
+  margin-bottom: 18px;
+}
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+}
+.clearfix:after {
+  clear: both;
+}
+
+.box-card {
+  width: 480px;
+}
 </style>
